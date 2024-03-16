@@ -1,0 +1,8 @@
+img :
+    - img1.png (..jpg)
+    - img1.txt (prompt training)
+    .....
+
+
+
+!accelerate launch --num_cpu_threads_per_process=2 "train_network.py" --config_file='/kaggle/working/sd-scripts/train_network_config.toml'

@@ -1,7 +1,6 @@
 import os
 import sys
 from torch import Tensor
-import torch.nn.functional as F
 
 
 from dotenv import load_dotenv
@@ -10,6 +9,7 @@ sys.path.append('./app/services/ai_services/')
 sys.path[0] = './app/services/ai_services/'
 
 import torch
+from torch import Tensor
 from transformers import AutoTokenizer, pipeline, AutoModel
 
 # Register
@@ -52,36 +52,6 @@ if "parrot_gte_task" in ENABLED_TASKS:
     model = AutoModel.from_pretrained("thenlper/gte-large").to(DEVICE)
 
     RESOURCE_CACHE["parrot_gte_task"] = (tokenizer, model)
-
-if "parrot_mistral_embeddings_task" in ENABLED_TASKS:
-    print(f"[INFO] Loading Mistral embeddings ...")
-    repo = "mesolitica/mistral-embedding-191m-8k-contrastive"
-
-    tokenizer = AutoTokenizer.from_pretrained(repo, trust_remote_code=True)
-    model = AutoModel.from_pretrained(repo, trust_remote_code=True).to(DEVICE)
-
-    RESOURCE_CACHE["parrot_mistral_embeddings_task"] = (tokenizer, model)
-
-
-def run_mistral_embeddings(text: str, configs: dict):
-
-    try: 
-        tokenizer, model = RESOURCE_CACHE["parrot_mistral_embeddings_task"]
-    except KeyError as err:
-        raise Exception(f"Mistral embeddings model is not loaded. {str(err)}")
-
-    try: 
-        return_tensors = configs.get("return_tensors", "pt")
-        padding = configs.get("padding", True)
-        input_ids = tokenizer(
-            text, 
-            return_tensors = return_tensors,
-            padding = padding
-        ).to(DEVICE)
-        result = model.encode(input_ids).cpu().detach().numpy()
-        return result
-    except Exception as e:
-        raise Exception(f"Error in Mistral embeddings model: {str(e)}")
 
 
 def run_text_completion_gemma_7b(messages: list, configs: dict):

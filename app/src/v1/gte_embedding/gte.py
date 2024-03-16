@@ -17,7 +17,6 @@ def text_embedding(
     )
     try:
         t0 = time.time()
-        print(request_data)
         result = run_gte_large(request_data['text'], request_data['config']).tolist()
         t1 = time.time()
         show_log(f"Time processed: {t1-t0}")
@@ -26,7 +25,7 @@ def text_embedding(
             UpdateStatusTaskRequest(
                 task_id=request_data['task_id'],
                 status="COMPLETED",
-                result=str(result)
+                result=result
             )
         )
         if not response:
@@ -40,7 +39,7 @@ def text_embedding(
         send_done_llm_task(
             DoneGTERequest(
                 task_id=request_data['task_id'],
-                response=str(result)
+                response=result
             )
         )
         return True, response, None

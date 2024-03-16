@@ -5,6 +5,7 @@ from base64 import b64encode
 
 
 base_url = "https://api.joinparrot.ai/v1"
+# base_url = "http://0.0.0.0:8000/v1"
 
 def get_token():
     """

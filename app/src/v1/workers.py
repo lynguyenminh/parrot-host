@@ -2,7 +2,7 @@ from app.base.exception.exception import show_log
 from app.src.v1.backend.api import send_progress_task
 from app.src.v1.lora_trainner.lora_trainner import lora_trainner
 from app.src.v1.lora_trainner.repo_init_resource_files import init_resource_files_from_urls
-from app.src.v1.schemas.base import LoraTrainnerRequest, SendProgressTaskRequest, SDXLRequest, SDRequest, T2SRequest, MusicGenRequest, AudioGenRequest, GTERequest, MistralEmbeddingRequest, DoneMistralEmbeddingRequest, DoneGTERequest
+from app.src.v1.schemas.base import LoraTrainnerRequest, SendProgressTaskRequest, SDXLRequest, SDRequest, T2SRequest, MusicGenRequest, AudioGenRequest, GTERequest
 from app.src.v1.sd.sd import sd
 from app.src.v1.sdxl.sdxl import sdxl
 from app.src.v1.sdxl.sdxl import sdxl_lightning
@@ -11,8 +11,6 @@ from app.src.v1.llm.text_completion import text_completion
 from app.src.v1.bark.bark_txt2speech import text2speech
 from app.src.v1.music_gen.music import music
 from app.src.v1.audio_gen.audio import audio
-from app.src.v1.gte_embedding.gte import text_embedding as gte_text_embedding
-from app.src.v1.mistral_embeddings.mistral_embeddings import text_embedding as mistral_text_embedding
 
 
 def worker_lora_trainner(
@@ -272,29 +270,14 @@ def worker_gte(
                 f"celery_task_name: {celery_task_name}"
     )
 
-    is_success, response, error = gte_text_embedding(
-        celery_task_id=celery_task_id,
-        request_data=request_data,
+    send_progress_task(
+        SendProgressTaskRequest(
+            task_id=request_data['task_id'],
+            task_type="GTE",
+            percent=10
+        )
     )
-    
-    return {
-        "is_success": is_success,
-        "response": response,
-        "error": error
-    }
-
-def worker_mistral_embeddings(
-        celery_task_id: str,
-        celery_task_name: str,
-        request_data: MistralEmbeddingRequest,
-):
-    show_log(
-        message="function: worker_mistral_embeddings"
-                f"celery_task_id: {celery_task_id}, "
-                f"celery_task_name: {celery_task_name}"
-    )
-
-    is_success, response, error = mistral_text_embedding(
+    is_success, response, error = audio(
         celery_task_id=celery_task_id,
         request_data=request_data,
     )

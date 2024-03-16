@@ -6,7 +6,7 @@ from celery.states import FAILURE, SUCCESS
 
 from app.src.v1.backend.api import send_done_task, send_fail_task
 from app.src.v1.schemas.base import (SendDoneTaskRequest, SendFailTaskRequest)
-from app.src.v1.workers import worker_lora_trainner, worker_sd, worker_sdxl, worker_sdxl_lightning, worker_txt2vid, worker_text_completion, worker_t2s, worker_musicgen, worker_audiogen, worker_gte, worker_mistral_embeddings
+from app.src.v1.workers import worker_lora_trainner, worker_sd, worker_sdxl, worker_sdxl_lightning, worker_txt2vid, worker_text_completion, worker_t2s, worker_musicgen, worker_audiogen, worker_gte
 
 from app.base.exception.exception import show_log
 
@@ -382,46 +382,6 @@ def parrot_gte_task(self, request_data):
                 SendFailTaskRequest(
                     task_id=request_data['task_id'],
                     task_type="GTE",
-                )
-            )
-            if not is_success:
-                raise Exception("send fail task failed")
-        else:
-            show_log(
-                message=f"Retry celery_id: {self.request.id},"
-                        f" celery_task_name: {self.name},"
-                        f" index: {self.request.retries}"
-            )
-            self.retry(exc=ex, countdown=int(os.environ['CELERY_RETRY_DELAY_TIME']))
-
-
-def parrot_mistral_embeddings_task(self, request_data):
-    result = None
-    try:
-        result = worker_mistral_embeddings(
-            request_data=request_data,
-            celery_task_id=self.request.id,
-            celery_task_name=self.name,
-        )
-        if not result.get('is_success'):
-            raise Exception("result is None")
-        self.update_state(state=SUCCESS, meta={'result': result})
-        is_success, _, _ = send_done_task(
-            SendDoneTaskRequest(
-                task_id=request_data['task_id'],
-                task_type="MISTRAL_EMBEDDINGS",
-            )
-        )
-        if not is_success:
-            raise Exception("send done task failed")
-    except Exception as ex:
-        if self.request.retries >= self.max_retries:
-            show_log(message=ex, level="error")
-            self.update_state(state=FAILURE, meta={'result': result})
-            is_success, _, _ = send_fail_task(
-                SendFailTaskRequest(
-                    task_id=request_data['task_id'],
-                    task_type="MISTRAL_EMBEDDINGS",
                 )
             )
             if not is_success:

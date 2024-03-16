@@ -5,8 +5,9 @@ from pydantic import BaseModel, Field
 
 class LoraTrainnerRequest(BaseModel):
     task_id: str = Field(..., description="task_id")
-    prompt: str = Field(..., description="prompt")
+    prompt: list[str] = Field(..., description="prompt")
     minio_input_paths: list[str] = Field(..., description="minio_input_paths")
+    is_sdxl: str = Field(..., description="1: SDXL, 0: SD1.5")
 
 
 class DoneLoraTrainnerRequest(BaseModel):
@@ -72,11 +73,6 @@ class GTERequest(BaseModel):
     prompt: str = Field(..., description="prompt")
     config: dict = Field(..., description="config")
 
-class MistralEmbeddingRequest(BaseModel):
-    task_id: str = Field(..., description="task_id")
-    text: str = Field(..., description="text")
-    config: dict = Field(..., description="config")
-
 class DoneLLMRequest(BaseModel):
     task_id: str = Field(..., description="task_id")
     response: Any = Field(..., description="url_download")
@@ -85,10 +81,6 @@ class DoneGTERequest(BaseModel):
     task_id: str = Field(..., description="task_id")
     response: Any = Field(..., description="response")
 
-class DoneMistralEmbeddingRequest(BaseModel):
-    task_id: str = Field(..., description="task_id")
-    response: Any = Field(..., description="response")
-    
 class T2SRequest(BaseModel):
     task_id: str = Field(..., description="task_id")
     prompt: str = Field(..., description="prompt")

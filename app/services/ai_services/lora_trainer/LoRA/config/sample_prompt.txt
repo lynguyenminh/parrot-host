@@ -1,0 +1,1 @@
+portrait, masterpiece, ultra realistic,32k,extremely detailed CG unity 8k wallpaper, best quality --n watermark,text, logo,contact, error, blurry, cropped, username, artist name, (worst quality, low quality:1.4), --w 512 --h 768 --l 7 --s 20 

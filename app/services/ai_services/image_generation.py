@@ -2,6 +2,7 @@ import io
 import os
 import sys
 import time
+import subprocess
 
 from dotenv import load_dotenv
 _ = load_dotenv()
@@ -95,6 +96,45 @@ if "parrot_txt2vid_damo_task" in ENABLED_TASKS:
     pipe.enable_vae_slicing()
     RESOURCE_CACHE["parrot_txt2vid_task"] = pipe
 
+
+if "parrot_lora_trainer_task" in ENABLED_TASKS:
+    print(os.getcwd())
+    print(f"[INFO] Loading LoRA Trainer ...")
+    from app.services.ai_services.lora_trainer.trainer import LoraTraner
+    RESOURCE_CACHE["parrot_lora_trainer_task"] = LoraTraner()
+
+    # download model
+    try: 
+        subprocess.run(['python', 'app/services/ai_services/lora_trainer/download_fromhub.py'], check=True)
+        print("[INFO] Downloaded model successfully")
+    except Exception as e:
+        print(f"[ERROR] Failed to download model. Error: {e}")
+
+
+def run_lora_trainer(config):
+    try: 
+        model = RESOURCE_CACHE["parrot_lora_trainer_task"]
+        print("[INFO] LoRA Trainer loaded")
+    except Exception as e:
+        print("[ERROR] LoRA Trainer not loaded")
+        return None
+
+    try: 
+        data_dir = config.get("data_dir")
+        user_name = config.get("user_name")
+        sdxl = config.get("sdxl", "0")
+        print(f"[INFO] Get parameters successfully. data_dir: {data_dir}, user_name: {user_name}, sdxl: {sdxl}")
+    except: 
+        print('[ERROR] Missing required parameters')
+        return None
+
+
+    try: 
+        output_model_path = model.run(data_dir, user_name, sdxl)
+        return output_model_path
+    except Exception as e:
+        print(e)
+        return None
 
 def run_sd(prompt: str, config: dict):
     # Load config

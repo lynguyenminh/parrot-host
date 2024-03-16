@@ -1,17 +1,17 @@
-python-multipart==0.0.6
-requests==2.31.0
-httptools==0.5.0
-python-dotenv==1.0.0
-redis==4.6.0
-loguru==0.7.2
-pydantic==2.4.2
-cryptography==41.0.4
-celery==5.3.4
+python-multipart == 0.0.6
+requests == 2.31.0
+httptools == 0.5.0
+python-dotenv ==1.0.0
+redis == 4.6.0
+loguru ==0.7.2
+pydantic == 2.4.2
+cryptography == 41.0.4
+celery == 5.3.4
 SQLAlchemy==1.4.5
 psycopg2-binary==2.9.9
 netifaces
-minio==7.2.0
-Pillow==10.2.0
+minio == 7.2.0
+Pillow == 10.2.0
 
 tqdm==4.66.1
 numpy==1.26.3
@@ -36,6 +36,8 @@ huggingface-hub==0.20.1
 xformers
 open-clip-torch==2.20.0
 
+
+
 av
 flashy
 hydra-core
@@ -45,11 +47,10 @@ num2words
 sentencepiece
 spacy
 torchaudio
+huggingface_hub
 demucs
 librosa
+gradio
 torchmetrics
 encodec
 protobuf
-
-git+https://github.com/facebookresearch/audiocraft.git
-

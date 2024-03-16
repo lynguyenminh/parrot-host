@@ -177,3 +177,5 @@ local-test/*
 *.safetensors 
 *.pt
 ./tmp/
+tmp/
+pretrained_model/*
