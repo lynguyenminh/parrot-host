@@ -6,7 +6,7 @@ from celery.states import FAILURE, SUCCESS
 
 from app.src.v1.backend.api import send_done_task, send_fail_task
 from app.src.v1.schemas.base import (SendDoneTaskRequest, SendFailTaskRequest)
-from app.src.v1.workers import worker_lora_trainner, worker_sd, worker_sdxl, worker_sdxl_lightning, worker_txt2vid, worker_text_completion, worker_t2s, worker_musicgen, worker_audiogen, worker_gte
+from app.src.v1.workers import worker_lora_trainer, worker_sd, worker_sdxl, worker_sdxl_lightning, worker_txt2vid, worker_text_completion, worker_t2s, worker_musicgen, worker_audiogen, worker_gte
 
 from app.base.exception.exception import show_log
 
@@ -26,7 +26,7 @@ Path("resources/output/images").mkdir(parents=True, exist_ok=True)
 def parrot_lora_trainer_task(self, request_data):
     result = None
     try:
-        result = worker_lora_trainner(
+        result = worker_lora_trainer(
             request_data=request_data,
             celery_task_id=self.request.id,
             celery_task_name=self.name,

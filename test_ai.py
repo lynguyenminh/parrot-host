@@ -7,7 +7,7 @@ if __name__=="__main__":
         celery_task_id="123",
         request_data={
             "task_id": "123",
-            "is_sdxl": "0", 
+            "is_sdxl": "1", 
             "prompt": ["solo, shirt, 1boy, male_focus, realistic", "solo, shirt, 1boy, male_focus, realistic", "solo, shirt, 1boy, male_focus, realistic", "solo, shirt, 1boy, male_focus, realistic", "solo, shirt, 1boy, male_focus, realistic"],
             "minio_input_paths": ["https://i.pinimg.com/236x/c2/9a/7d/c29a7d29348b1a3f502803ab9d8355cc.jpg", 
                                   "https://ivcdn.vnecdn.net/giaitri/images/web/2019/07/01/mv-son-tung-m-tp-dat-47-trieu-luot-xem-sau-50-phut-ra-mat-1561993656.jpg", 

@@ -8,13 +8,13 @@ caption_dropout_every_n_epochs = 0
 flip_aug = false
 color_aug = false
 [[datasets.subsets]]
-image_dir = "/workspace/parrot-host/app/services/ai_services/lora_trainer/tmp/2cc8a5a3-ebc0-49d5-a0e9-57579b7a6f48"
+image_dir = "/workspace/parrot-host/app/services/ai_services/lora_trainer/tmp/52b6f00a-3619-41fe-8b4b-969282dedecd"
 class_tokens = "mksks style"
 num_repeats = 48
 
 [[datasets.subsets]]
 is_reg = true
-image_dir = "/workspace/parrot-host/app/services/ai_services/lora_trainer/tmp/2cc8a5a3-ebc0-49d5-a0e9-57579b7a6f48"
+image_dir = "/workspace/parrot-host/app/services/ai_services/lora_trainer/tmp/52b6f00a-3619-41fe-8b4b-969282dedecd"
 class_tokens = "style"
 num_repeats = 1
 

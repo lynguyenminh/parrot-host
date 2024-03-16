@@ -98,10 +98,14 @@ if "parrot_txt2vid_damo_task" in ENABLED_TASKS:
 
 
 if "parrot_lora_trainer_task" in ENABLED_TASKS:
-    print(os.getcwd())
     print(f"[INFO] Loading LoRA Trainer ...")
     from app.services.ai_services.lora_trainer.trainer import LoraTraner
-    RESOURCE_CACHE["parrot_lora_trainer_task"] = LoraTraner()
+
+    try: 
+        RESOURCE_CACHE["parrot_lora_trainer_task"] = LoraTraner()
+        print("[INFO] LoRA Trainer loaded successfully")
+    except Exception as e:
+        print(f"[ERROR] Failed to load LoRA Trainer. Error: {e}")
 
     # download model
     try: 

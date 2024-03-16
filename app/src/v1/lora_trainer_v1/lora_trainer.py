@@ -5,7 +5,6 @@ import uuid
 import requests
 import mimetypes
 
-
 from app.base.exception.exception import show_log
 from app.services.ai_services.image_generation import run_lora_trainer
 from app.src.v1.backend.api import (update_status_for_task, send_done_lora_trainner_task)

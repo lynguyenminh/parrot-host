@@ -128,7 +128,7 @@ lr_scheduler_power = 0
 # Miscellaneous configuration
 lowram = True
 noise_offset = 0.0
-num_epochs = 2
+num_epochs = 12
 train_batch_size = Batch_size
 mixed_precision = "fp16"
 save_precision = "fp16"

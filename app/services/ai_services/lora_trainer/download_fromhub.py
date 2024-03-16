@@ -16,6 +16,11 @@ if os.path.exists(path_save_model) is False:
     pipe = StableDiffusionPipeline.from_pretrained(model_xl, torch_dtype=torch.float16, cache_dir=path_save_model)
     print(f"[INFO] Download model to {path_save_model} successfully")
 else: 
-    print(f"Folder exist: {path_save_model}")
+    list_item = os.listdir(path_save_model)
+    if len(list_item) == 0:
+        # download the model
+        pipe = StableDiffusionPipeline.from_pretrained(model_normal, torch_dtype=torch.float16, cache_dir=path_save_model)
+        pipe = StableDiffusionPipeline.from_pretrained(model_xl, torch_dtype=torch.float16, cache_dir=path_save_model)
+        print(f"[INFO] Download model to {path_save_model} successfully")
 
 
